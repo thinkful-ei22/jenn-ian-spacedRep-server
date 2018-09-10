@@ -8,7 +8,7 @@ let {wordList} = require("./linked-list")
 
 
 router.get('/', (req, res) => {
-  res.json(wordList.head.value);
+  res.json(wordList.head);
 });
 
 module.exports = {router};
