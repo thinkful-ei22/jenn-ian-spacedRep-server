@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const {User} = require('./models');
-const Quiver = require('../quivers/models');
 
 const router = express.Router();
 
@@ -132,17 +131,7 @@ router.post('/', jsonParser, (req, res) => {
         return res.status(err.code).json(err);
       }
       res.status(500).json({code: 500, message: 'Internal server error'});
-    });
-
-    Quiver.create({
-        username,
-        skiAreas: []
-    })
-    .then((quiver) => {
-      return res.json(quiver)
-    })
-    .catch(err => next(err));
-    
+    });   
 });
 
 // Never expose all your users like below in a prod application
@@ -154,13 +143,5 @@ router.get('/', (req, res) => {
     .then(users => res.json(users.map(user => user.serialize())))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
-
-router.put('/:username', (req, res, next) => {
-  const username = req.params.username;
-  const { skiArea } = req.body
-  console.log(skiArea);
-  User.findByIdAndUpdate({username})
-
-})
 
 module.exports = {router};

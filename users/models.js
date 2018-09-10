@@ -16,7 +16,6 @@ const UserSchema = new mongoose.Schema({
   },
   firstName: {type: String, default: ''},
   lastName: {type: String, default: ''},
-  skiAreas: [String]
 });
 
 UserSchema.set('toObject', {
