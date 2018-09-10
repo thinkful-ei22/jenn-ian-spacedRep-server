@@ -10,7 +10,6 @@ class SingleLinkedList {
     constructor() {
         this.head = null;
     }
-
     insertFirst(key, value) {
         if (this.head === null)
             this.head = new _SllNode(key, value, null);
@@ -132,7 +131,6 @@ class SingleLinkedList {
             return 1;
         }
     }
-
     display() {
         let curNode = this.head;
 
@@ -144,30 +142,31 @@ class SingleLinkedList {
         }
     }
 }
-// const hola = {hola: "hello"};
-// const adios = {adios: "goodbye"};
-// const gracias = {gracias: "thank you"};
-// const uno = {uno: "one"};
-// const dos = {dos: "two"};
-// const tres = {tres: "three"};
-// const rojo = {rojo: "red"};
-// const verde = {verde: "green"};
-// const azul = {azul: "blue"};
-// const amarillo = {amarillo: "yellow"};
-// const purpura = {purpura: "purple"};
+
+const hola = {spanish: "hola", english: "hello"};
+const adios = {spanish: "adios", english: "goodbye"};
+const gracias = {spanish: "gracias", english: "thank you"};
+const uno = {spanish: "uno", english: "one"};
+const dos = {spanish: "dos", english: "two"};
+const tres = {spanish: "tres", english: "three"};
+const rojo = {spanish: "rojo", english: "red"};
+const verde = {spanish: "verde", english: "green"};
+const azul = {spanish: "azul", english: "blue"};
+const amarillo = {spanish: "amarillo", english: "yellow"};
+const purpura = {spanish: "purpura", english: "purple"};
 
 let wordList = new SingleLinkedList();
-wordList.insertFirst("hello", "hola");
-wordList.insertFirst("goodbye", "adios");
-wordList.insertFirst("thank you", "gracias");
-wordList.insertFirst("one", "uno");
-wordList.insertFirst("two", "dos");
-wordList.insertFirst("three", "tres");
-wordList.insertFirst("red", "rojo");
-wordList.insertFirst("green", "verde");
-wordList.insertFirst("blue", "azul");
-wordList.insertFirst("yellow", "amarillo");
-wordList.insertFirst("purple", "purpura");
+wordList.insertFirst(1, hola);
+wordList.insertFirst(2, adios);
+wordList.insertFirst(3, gracias);
+wordList.insertFirst(4, uno);
+wordList.insertFirst(5, dos);
+wordList.insertFirst(6, tres);
+wordList.insertFirst(7, rojo);
+wordList.insertFirst(8, verde);
+wordList.insertFirst(9, azul);
+wordList.insertFirst(10, amarillo);
+wordList.insertFirst(11, purpura);
 
 console.log(wordList.display());
 console.log(wordList);

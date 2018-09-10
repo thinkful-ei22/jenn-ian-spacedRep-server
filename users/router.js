@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const {User} = require('./models');
+const User = require('./models');
 
 const router = express.Router();
 
@@ -140,7 +140,8 @@ router.post('/', jsonParser, (req, res) => {
 // verify this in the Mongo shell.
 router.get('/', (req, res) => {
   return User.find()
-    .then(users => res.json(users.map(user => user.serialize())))
+    // .then(users => res.json(users.map(user => user.serialize())))
+    .then(users => res.json(users))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 

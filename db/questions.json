@@ -1,0 +1,57 @@
+[
+    {
+        "_id": "123433333333333333333300",
+        "spanish": "hola",
+        "english": "hello"
+    },
+    {
+        "_id": "123433333333333333333301",
+        "spanish": "adios",
+        "english": "goodbye"
+    },
+    {
+        "_id": "123433333333333333333303",
+        "spanish": "gracias",
+        "english": "thank you"
+    },
+    {
+        "_id": "123433333333333333333304",
+        "spanish": "uno",
+        "english": "one"
+    },
+    {
+        "_id": "123433333333333333333305",
+        "spanish": "dos",
+        "english": "two"
+    },
+    {
+        "_id": "123433333333333333333306",
+        "spanish": "tres",
+        "english": "three"
+    },
+    {
+        "_id": "123433333333333333333307",
+        "spanish": "rojo",
+        "english": "red"
+    },
+    {
+        "_id": "123433333333333333333308",
+        "spanish": "verde",
+        "english": "green"
+    },
+    {
+        "_id": "123433333333333333333309",
+        "spanish": "azul",
+        "english": "blue"
+    },
+    {
+        "_id": "123433333333333333333310",
+        "spanish": "amarillo",
+        "english": "yellow"
+    },
+    {
+        "_id": "123433333333333333333311",
+        "spanish": "purpura",
+        "english": "purple"
+    }
+]
