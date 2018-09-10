@@ -7,6 +7,7 @@ const passport = require('passport');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
+const { router: wordsRouter } = require('./words/router');
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
@@ -38,6 +39,7 @@ passport.use(jwtStrategy);
 //mount routers
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
+app.use('/api/words/', wordsRouter);
 
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {
