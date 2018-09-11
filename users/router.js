@@ -162,10 +162,12 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
   console.log(id);
-  return User.find({_id: id})
+  return User.findById(id)
     .then(user => {
       if (user) {
-        res.json(user)
+        let [firstQuestion] = user.questions.filter(question => question.next === 1);
+        firstQuestion.english = "no peeking";
+        res.json(firstQuestion)
       } else {
         next();
       }
@@ -178,14 +180,24 @@ router.get('/:id', (req, res, next) => {
 
 
 router.put('/:id', (req, res, next) => {
-  const {userAnswer, currentQuestion} = req.body;
+  const {userAnswer, currentQuestionSpanish} = req.body;
   const userId = req.params.id;
-  if ( userAnswer === currentQuestion.english ){
-    User.findByIdAndUpdate(userId, )
-    //find the question with ID
-  } else {
+  let correctAnswer;
 
-  }
+  return Question.find({spanish: currentQuestionSpanish})
+    .then(question => correctAnswer = question[0].english)
+    .then(correctAnswer => {
+      if (userAnswer === correctAnswer){
+        console.log("user got it right!!")
+        // we need to double the memory strength
+        // we need to increase score by 1
+      } else {
+        console.log("user got it wrong")
+        // we need to push back in line
+        // score does not change....
+      }
+    })
+    .catch(err => next(err));  
 
 
   //this fires when user submits answer
