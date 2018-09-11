@@ -157,4 +157,16 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
+router.put('/', (req, res, next) => {
+  //this fires when user submits answer
+  //send answer
+  //check if answer === user.question[?].english
+  //multiply question strength by 2
+  //change question order...change next of question that was just answered and the one thats next
+  //1:1, 2:1, 3:1, 4:1, 5:1 -> first one right
+  //1:2, 2:1, 3:1, 4:1, 5:1 -> up the memory strength
+  //2:1, 3:1, 4:1, 5:1, 1:2 -> sort by memory strength AND got number 2 wrong
+  //3:1, 4:1, 5:1, 2:1, 1:2 -> move incorrect question to back of the 1s
+});
+
 module.exports = {router};
