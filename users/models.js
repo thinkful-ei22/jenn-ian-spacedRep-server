@@ -21,7 +21,8 @@ const UserSchema = new mongoose.Schema({
   head: {type: Number, default: 0},
   questions: [
     {
-      question: {type: mongoose.Schema.Types.ObjectId, ref: 'Question'},
+      spanish: String,
+      english: String,
       memoryStrength: Number,
       next: Number
     }

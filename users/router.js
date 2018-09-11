@@ -114,7 +114,7 @@ router.post('/', jsonParser, (req, res) => {
       return User.hashPassword(password);
     })
     .then(hash => {
-      return User.create({
+      return new User({
         username,
         password: hash,
         firstName,
@@ -122,45 +122,30 @@ router.post('/', jsonParser, (req, res) => {
       });
     })
     .then(user => {
-      console.log(user);
+      Question.find()
+        .then(questionList => ({user, questionList}))
+        .then(({user, questionList}) => {
+          user.questions = questionList.map((question, index) => ({
+            spanish: question.spanish,
+            english: question.english,
+            memoryStrength: 1,
+            next: index===questionList.length-1 ? null : index+1
+          }));
+          return user.save();
+        });
+    })
+    .then(user => {
       return res.status(201).json(user.serialize());
     })
     .catch(err => {
-      // Forward validation errors on to the client, otherwise give a 500
-      // error because something unexpected has happened
+    // Forward validation errors on to the client, otherwise give a 500
+    // error because something unexpected has happened
       if (err.reason === 'ValidationError') {
         return res.status(err.code).json(err);
       }
       res.status(500).json({code: 500, message: 'Internal server error'});
-    })
-    .then(
-      Question.find()
-        .then(console.log('username is', username))
-        .then(questionList => 
-          // let newQuestions = questionList.map(question => {
-          //   question.memoryStrength = 1;
-          //   question.next= 0;
-          // });
-          User.findOneAndUpdate({username}, {$push: {questions: { $each: [...questionList]}}}, {returnNewDocument : true})
-        )
-        .catch(err => res.status(500).json({message: 'Could not find questions'}))
-    )
-    // .then(user => {
-    //   console.log(user);
-    //   return res.status(201).json(user.serialize());
-    // })
-    // .catch(err => {
-    //   // Forward validation errors on to the client, otherwise give a 500
-    //   // error because something unexpected has happened
-    //   if (err.reason === 'ValidationError') {
-    //     return res.status(err.code).json(err);
-    //   }
-    //   res.status(500).json({code: 500, message: 'Internal server error'});
-    // });
-    .then(user => user);
+    });
 });
-
-
 // Never expose all your users like below in a prod application
 // we're just doing this so we have a quick way to see
 // if we're creating users. keep in mind, you can also
