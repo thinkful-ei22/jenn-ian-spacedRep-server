@@ -124,6 +124,18 @@ router.post('/', jsonParser, (req, res) => {
     .then(user => {
       return res.status(201).json(user.serialize());
     })
+    .then(user =>{
+      Question.find()
+        .then(questions => user.questions.push(res.json(questions)))
+        .catch(err => res.status(500).json({message: 'Could not find questions'}));
+    }
+    )
+    .then(user =>{user.questions.map(question => {
+      question.memoryStrength = 1;
+      question.next= 0;
+    });
+    console.log(user);
+    )
     .catch(err => {
       // Forward validation errors on to the client, otherwise give a 500
       // error because something unexpected has happened
