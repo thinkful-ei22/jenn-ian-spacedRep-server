@@ -37,9 +37,9 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 //mount routers
-app.use('/api/users/', usersRouter);
-app.use('/api/auth/', authRouter);
-app.use('/api/questions/', questionsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/questions', questionsRouter);
 
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {

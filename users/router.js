@@ -122,7 +122,7 @@ router.post('/', jsonParser, (req, res) => {
       });
     })
     .then(user => {
-      Question.find()
+      return Question.find()
         .then(questionList => ({user, questionList}))
         .then(({user, questionList}) => {
           user.questions = questionList.map((question, index) => ({
@@ -157,7 +157,37 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-router.put('/', (req, res, next) => {
+
+//we want this to return the first question in the users questions array
+router.get('/:id', (req, res, next) => {
+  const id = req.params.id;
+  console.log(id);
+  return User.find({_id: id})
+    .then(user => {
+      if (user) {
+        res.json(user)
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
+      res.status(500).json({message: 'Internal server error'})
+    });
+});
+
+
+router.put('/:id', (req, res, next) => {
+  const {userAnswer, currentQuestion} = req.body;
+  const userId = req.params.id;
+  if ( userAnswer === currentQuestion.english ){
+    User.findByIdAndUpdate(userId, )
+    //find the question with ID
+  } else {
+
+  }
+
+
   //this fires when user submits answer
   //send answer
   //check if answer === user.question[?].english

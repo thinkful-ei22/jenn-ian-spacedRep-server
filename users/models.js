@@ -33,7 +33,6 @@ UserSchema.set('toObject', {
   virtuals: true,
   versionKey: false,
   transform: (doc, ret) => {
-    delete ret._id;
     delete ret.password;
   }
 });
@@ -44,8 +43,9 @@ UserSchema.methods.serialize = function() {
     firstName: this.firstName || '',
     lastName: this.lastName || '',
     score: this.score || 0,
-    head: this.head ||0,
-    questions: this.questions || []
+    _id: this._id
+    // head: this.head ||0,
+    // questions: this.questions || [],
   };
 };
 

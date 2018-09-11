@@ -17,7 +17,8 @@ mongoose.connect(DATABASE_URL)
   })
   .then(() => {
     console.info('Seeding Database');
-    return User.insertMany(seedUsers);
+     User.insertMany(seedUsers);
+     User.createIndexes();
   })
   .then(() => {
     console.info('Seeding Database');
