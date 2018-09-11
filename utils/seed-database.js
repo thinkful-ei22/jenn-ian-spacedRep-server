@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 
 const { DATABASE_URL } = require('../config');
 
-const Drink = require('../models/drinks');
+const User = require('../users/models');
 
-const seedDrinks = require('../db/seed/drinks');
+const seedUsers = require('../db/users.json');
 
 console.log(`Connecting to mongodb at ${DATABASE_URL}`);
 mongoose.connect(DATABASE_URL)
@@ -16,7 +16,7 @@ mongoose.connect(DATABASE_URL)
   })
   .then(() => {
     console.info('Seeding Database');
-    return Drink.insertMany(seedDrinks)
+    return User.insertMany(seedUsers);
   })
   .then(() => {
     console.info('Disconnecting');

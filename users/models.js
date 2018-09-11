@@ -43,7 +43,8 @@ UserSchema.methods.serialize = function() {
     firstName: this.firstName || '',
     lastName: this.lastName || '',
     score: this.score || 0,
-  
+    head: this.head ||0,
+    questions: this.questions || []
   };
 };
 

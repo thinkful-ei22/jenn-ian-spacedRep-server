@@ -1,4 +1,4 @@
-'use strict';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -98,7 +98,7 @@ router.post('/', jsonParser, (req, res) => {
   firstName = firstName.trim();
   lastName = lastName.trim();
 
-    User.find({username})
+  User.find({username})
     .count()
     .then(count => {
       if (count > 0) {
