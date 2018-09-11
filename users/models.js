@@ -1,4 +1,4 @@
-'use strict';
+
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const Question = require('../questions/models');
@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   head: {type: Number, default: 0},
   questions: [
     {
-      question: {type: mongoose.Schema.Types.ObjectId, ref: "Question"},
+      question: {type: mongoose.Schema.Types.ObjectId, ref: 'Question'},
       memoryStrength: Number,
       next: Number
     }
@@ -32,8 +32,8 @@ UserSchema.set('toObject', {
   virtuals: true,
   versionKey: false,
   transform: (doc, ret) => {
-      delete ret._id;
-      delete ret.password;
+    delete ret._id;
+    delete ret.password;
   }
 });
 
