@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 const { DATABASE_URL } = require('../config');
 
 const User = require('../users/models');
-
+const Question = require('../questions/models');
 const seedUsers = require('../db/users.json');
+const seedQuestions = require('../db/questions.json');
 
 console.log(`Connecting to mongodb at ${DATABASE_URL}`);
 mongoose.connect(DATABASE_URL)
@@ -17,6 +18,10 @@ mongoose.connect(DATABASE_URL)
   .then(() => {
     console.info('Seeding Database');
     return User.insertMany(seedUsers);
+  })
+  .then(() => {
+    console.info('Seeding Database');
+    return Question.insertMany(seedQuestions);
   })
   .then(() => {
     console.info('Disconnecting');
