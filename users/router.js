@@ -5,8 +5,10 @@ const bodyParser = require('body-parser');
 const User = require('./models');
 const Question = require('../questions/models');
 const router = express.Router();
-
+const passport = require('passport');
 const jsonParser = bodyParser.json();
+
+const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });
 
 // Post to register a new user
 router.post('/', jsonParser, (req, res) => {
@@ -159,13 +161,17 @@ router.get('/', (req, res) => {
 
 
 //we want this to return the first question in the users questions array
-router.get('/:id', (req, res, next) => {
+router.get('/:id', jwtAuth, (req, res, next) => {
   const id = req.params.id;
   return User.findById(id)
     .then(user => {
       if (user) {
         let firstQuestion = user.questions[user.head];
         firstQuestion.english = 'no peeking';
+        firstQuestion.questionsAnswered = user.questionsAnswered;
+        console.log(firstQuestion.questionsAnswered);
+        firstQuestion.questionsCorrect = user.questionsCorrect;
+        // console.log(firstQuestion)
         res.json(firstQuestion);
       } else {
         next();
@@ -177,7 +183,7 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', jwtAuth, (req, res, next) => {
   const userId = req.params.id;
   const { userAnswer } = req.body;
   User.findById(userId)

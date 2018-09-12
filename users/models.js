@@ -44,7 +44,8 @@ UserSchema.methods.serialize = function() {
     username: this.username || '',
     firstName: this.firstName || '',
     lastName: this.lastName || '',
-    score: this.score || 0,
+    questionsAnswered: this.questionsAnswered || 0,
+    questionsCorrect: this.questionsCorrect || 0,
     _id: this._id
     // head: this.head ||0,
     // questions: this.questions || [],
