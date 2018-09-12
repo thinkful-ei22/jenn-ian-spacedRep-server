@@ -168,10 +168,6 @@ router.get('/:id', jwtAuth, (req, res, next) => {
       if (user) {
         let firstQuestion = user.questions[user.head];
         firstQuestion.english = 'no peeking';
-        firstQuestion.questionsAnswered = user.questionsAnswered;
-        console.log(firstQuestion.questionsAnswered);
-        firstQuestion.questionsCorrect = user.questionsCorrect;
-        // console.log(firstQuestion)
         res.json(firstQuestion);
       } else {
         next();
