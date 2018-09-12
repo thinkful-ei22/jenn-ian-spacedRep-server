@@ -161,7 +161,6 @@ router.get('/', (req, res) => {
 //we want this to return the first question in the users questions array
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
-  console.log(id);
   return User.findById(id)
     .then(user => {
       if (user) {
@@ -183,7 +182,6 @@ router.put('/:id', (req, res, next) => {
   const { userAnswer } = req.body;
   User.findById(userId)
     .then(user => {
-
       let currentIndex = user.head;
       // console.log('currentIn', currentQuestion);
       const correctAnswer = user.questions[user.head].english;
@@ -211,8 +209,16 @@ router.put('/:id', (req, res, next) => {
       answeredQuestion.next = currentQuestion.next;
       currentQuestion.next = currentIndex;
       // console.log(currentQuestion);
-      // console.log(user);
-      return user.save();
+      return user.save()
+        .then(user => {
+          let response = { 
+            feedback: user.feedback,
+            correctAnswer,
+            questionsAnswered: user.questionsAnswered,
+            questionsCorrect: user.questionsCorrect
+          };
+          res.json(response)
+        });
     })
     .catch(err => next(err));
 });
