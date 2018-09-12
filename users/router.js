@@ -183,32 +183,35 @@ router.put('/:id', (req, res, next) => {
   User.findById(userId)
     .then(user => {
       let currentIndex = user.head;
-      // console.log('currentIn', currentQuestion);
       const correctAnswer = user.questions[user.head].english;
-      // console.log('correctAnswer=', correctAnswer);
       let answeredQuestion = user.questions[currentIndex];
-      // console.log('answeredQuestion=', answeredQuestion);
+
       user.questionsAnswered++;
-      if (userAnswer === correctAnswer) {
-        // console.log('user got it right!');
-        answeredQuestion.memoryStrength *= 2; 
+
+      if (userAnswer === correctAnswer) {//add toLowerCase();
+        if(answeredQuestion.memoryStrength * 2 >= user.questions.length){
+          answeredQuestion.memoryStrength = user.questions.length-1;
+        }
+        else{
+          answeredQuestion.memoryStrength *= 2;
+        }
         user.feedback = true;
         user.questionsCorrect++;
       } else {
-        // console.log('user got it wrong');
         answeredQuestion.memoryStrength = 1;
         user.feedback = false;
       }
       user.head = answeredQuestion.next;
-      // console.log(user.head);
+  
       let currentQuestion = answeredQuestion;
+     
       for(let i=0; i<answeredQuestion.memoryStrength; i++){
         const nextIndex = currentQuestion.next;
         currentQuestion = user.questions[nextIndex];
       }
       answeredQuestion.next = currentQuestion.next;
       currentQuestion.next = currentIndex;
-      // console.log(currentQuestion);
+   
       return user.save()
         .then(user => {
           let response = { 
@@ -217,7 +220,7 @@ router.put('/:id', (req, res, next) => {
             questionsAnswered: user.questionsAnswered,
             questionsCorrect: user.questionsCorrect
           };
-          res.json(response)
+          res.json(response);
         });
     })
     .catch(err => next(err));
