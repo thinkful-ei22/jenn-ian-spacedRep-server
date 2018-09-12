@@ -131,6 +131,8 @@ router.post('/', jsonParser, (req, res) => {
             spanish: question.spanish,
             english: question.english,
             memoryStrength: 1,
+            correctCount: 0,
+            incorrectCount: 0,
             next: index === questionList.length - 1 ? null : index + 1
           }));
           return user.save();
@@ -166,9 +168,14 @@ router.get('/:id', jwtAuth, (req, res, next) => {
   return User.findById(id)
     .then(user => {
       if (user) {
+        let questions = user.questions;
         let firstQuestion = user.questions[user.head];
         firstQuestion.english = 'no peeking';
-        res.json(firstQuestion);
+        let response ={
+          questions,
+          firstQuestion
+        };
+        res.json(response);
       } else {
         next();
       }
@@ -190,19 +197,23 @@ router.put('/:id', jwtAuth, (req, res, next) => {
 
       user.questionsAnswered++;
 
-      if (userAnswer === correctAnswer) {//add toLowerCase();
+      if (userAnswer.toLowerCase() === correctAnswer) {
         if(answeredQuestion.memoryStrength * 2 >= user.questions.length){
           answeredQuestion.memoryStrength = user.questions.length-1;
+          answeredQuestion.correctCount = answeredQuestion.correctCount+ 1;
         }
         else{
           answeredQuestion.memoryStrength *= 2;
+          answeredQuestion.correctCount = answeredQuestion.correctCount+1;
         }
         user.feedback = true;
         user.questionsCorrect++;
       } else {
         answeredQuestion.memoryStrength = 1;
+        answeredQuestion.incorrectCount = answeredQuestion.incorrectCount+1;
         user.feedback = false;
       }
+      console.log(answeredQuestion);
       user.head = answeredQuestion.next;
   
       let currentQuestion = answeredQuestion;

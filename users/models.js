@@ -26,7 +26,9 @@ const UserSchema = new mongoose.Schema({
       spanish: String,
       english: String,
       memoryStrength: Number,
-      next: Number
+      next: Number,
+      correctCount: {type: Number, default: 0},
+      incorrectCount: {type: Number, default: 0},
     }
   ],
 });
