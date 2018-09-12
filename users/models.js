@@ -17,8 +17,10 @@ const UserSchema = new mongoose.Schema({
   },
   firstName: {type: String, default: ''},
   lastName: {type: String, default: ''},
-  score: {type: Number, default: 0},
+  questionsAnswered: {type: Number, default: 0},
+  questionsCorrect: {type: Number, default: 0},
   head: {type: Number, default: 0},
+  feedback: Boolean,
   questions: [
     {
       spanish: String,
