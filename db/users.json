@@ -12,77 +12,110 @@
           "spanish": "hola",
           "english": "hello",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 1
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b771",
           "spanish": "adios",
           "english": "goodbye",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 2
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b770",
           "spanish": "gracias",
           "english": "thank you",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 3
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b76f",
           "spanish": "uno",
           "english": "one",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 4
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b76e",
           "spanish": "dos",
           "english": "two",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 5
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b76d",
           "spanish": "tres",
           "english": "three",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 6
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b76c",
           "spanish": "rojo",
           "english": "red",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 7
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b76b",
           "spanish": "verde",
           "english": "green",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 8
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b76a",
           "spanish": "azul",
           "english": "blue",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 9
-      },
+  
+        },
       {
           "_id": "5b97f9825f7890082ec5b769",
           "spanish": "amarillo",
           "english": "yellow",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": 10
-      },
+ 
+        },
       {
           "_id": "5b97f9825f7890082ec5b768",
           "spanish": "purpura",
           "english": "purple",
           "memoryStrength": 1,
+          "correctCount": 0,
+          "incorrectCount": 0,
           "next": null
+          
       }
   ],
     "password": "$2a$10$QJCIX42iD5QMxLRgHHBJre2rH6c6nI24UysmSYtkmeFv6X8uS1kgi"
