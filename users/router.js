@@ -10,7 +10,7 @@ const jsonParser = bodyParser.json();
 
 const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });
 
-// Post to register a new user
+// ----------------Post to register a new user--------------------------
 router.post('/', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
@@ -150,10 +150,8 @@ router.post('/', jsonParser, (req, res) => {
       res.status(500).json({ code: 500, message: 'Internal server error' });
     });
 });
-// Never expose all your users like below in a prod application
-// we're just doing this so we have a quick way to see
-// if we're creating users. keep in mind, you can also
-// verify this in the Mongo shell.
+
+//--------------------TEMPORARY GET ALL ENDPOINT------------------------------
 router.get('/', (req, res) => {
   return User.find()
     // .then(users => res.json(users.map(user => user.serialize())))
@@ -162,7 +160,7 @@ router.get('/', (req, res) => {
 });
 
 
-//we want this to return the first question in the users questions array
+//------------------GET ENDPOINT THAT RETURNS FIRST QUESTION------------------------
 router.get('/:id', jwtAuth, (req, res, next) => {
   const id = req.params.id;
   return User.findById(id)
@@ -186,9 +184,17 @@ router.get('/:id', jwtAuth, (req, res, next) => {
     });
 });
 
+//------------PUT ENDPOINT WITH SPACED REP ALGORITHM--------------------
 router.put('/:id', jwtAuth, (req, res, next) => {
   const userId = req.params.id;
   const { userAnswer } = req.body;
+
+  if (!userAnswer) {
+    const err = new Error('Missing `userAnswer` in request body');
+    err.status = 400;
+    return next(err);
+  }
+
   User.findById(userId)
     .then(user => {
       let currentIndex = user.head;
@@ -213,7 +219,6 @@ router.put('/:id', jwtAuth, (req, res, next) => {
         answeredQuestion.incorrectCount = answeredQuestion.incorrectCount+1;
         user.feedback = false;
       }
-      console.log(answeredQuestion);
       user.head = answeredQuestion.next;
   
       let currentQuestion = answeredQuestion;

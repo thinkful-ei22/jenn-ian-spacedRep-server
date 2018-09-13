@@ -4,12 +4,18 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 
-const {app} = require('../index');
+const { app } = require('../index');
 const User = require('./models');
-const { TEST_DATABASE_URL } = require('../config');
+const { TEST_DATABASE_URL, JWT_SECRET } = require('../config');
+const jwt = require('jsonwebtoken');
+const seedUsers = require('../db/users');
+
 
 chai.use(chaiHttp);
 const expect = chai.expect;
+let token;
+let user;
+
 
 describe('Hablamos API - Users', function () {
     const username = 'exampleUser';
@@ -23,7 +29,14 @@ describe('Hablamos API - Users', function () {
     });
 
     beforeEach(function () {
-        return User.createIndexes();
+        return Promise.all([
+            User.insertMany(seedUsers),
+            User.createIndexes()
+        ])
+            .then(([users]) => {
+                user = users[0];
+                token = jwt.sign({ user }, JWT_SECRET, { subject: user.username });
+            })
     });
 
     afterEach(function () {
@@ -33,6 +46,7 @@ describe('Hablamos API - Users', function () {
     after(function () {
         return mongoose.disconnect();
     });
+
     describe('/api/users', function () {
         describe('POST', function () {
             it('Should reject users with missing username', function () {
@@ -309,5 +323,91 @@ describe('Hablamos API - Users', function () {
             });
         });
     });
+    describe('GET/:id', function() {
+        it('Should return the first question in line', function() {
+            return User.findOne()
+                .then(user => {
+                    return chai
+                        .request(app)
+                        .get(`/api/users/${user._id}`)
+                        .set('Authorization', `Bearer ${token}`)
+                })
+                .then(res => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('object');
+                    expect(res.body).to.have.keys(
+                        'firstQuestion',
+                        'questions'
+                    );
+                    expect(res.body.questions).to.be.an('array')
+                })
+        })
+        it('Should return an error when given bad ID', function() {
+            return chai
+                .request(app)
+                .get('/api/users/users/1234456')
+                .set('Authorization', `Bearer ${token}`)
+                .then(res => {
+                    expect(res).to.have.status(404)
+                });
+        })
+        it('Should return an error without proper JWT', function() {
+            return User.findOne()
+                .then(user => {
+                    return chai
+                        .request(app)
+                        .get(`/api/users/${user._id}`)
+                })
+                .then(res => {
+                    expect(res).to.have.status(401)
+                });
+        })
+    })
+    describe('PUT /:id', function () {
+        it('Should update the list and return correct feedback', function() {
+            return User.findOne()
+                .then(user => {
+                    return chai
+                        .request(app)
+                        .put(`/api/users/${user._id}`)
+                        .set('Authorization', `Bearer ${token}`)
+                        .send({userAnswer: 'peanuts'})
+                })
+                .then(res => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('object');
+                    expect(res.body).to.have.keys(
+                        'feedback',
+                        'correctAnswer',
+                        'questionsAnswered',
+                        'questionsCorrect'
+                    );
+                })
+        })
+        it('Should return 400 if request missing a userAnswer', function() {
+            return User.findOne()
+                .then(user => {
+                    return chai
+                        .request(app)
+                        .put(`/api/users/${user._id}`)
+                        .set('Authorization', `Bearer ${token}`)
+                        .send()
+                })
+                .then(res => {
+                    expect(res).to.have.status(400);
+                })
+        })
+        it('Should return an error without proper JWT', function() {
+            return User.findOne()
+                .then(user => {
+                    return chai
+                        .request(app)
+                        .get(`/api/users/${user._id}`)
+                })
+                .then(res => {
+                    expect(res).to.have.status(401)
+                });
+        })
+    })
 });
 
