@@ -163,6 +163,7 @@ router.get('/', (req, res) => {
 //------------------GET ENDPOINT THAT RETURNS FIRST QUESTION------------------------
 router.get('/:id', jwtAuth, (req, res, next) => {
   const id = req.params.id;
+
   return User.findById(id)
     .then(user => {
       if (user) {
