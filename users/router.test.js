@@ -5,13 +5,13 @@ const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 
 const {app} = require('../index');
-const {User} = require('./models');
+const User = require('./models');
 const { TEST_DATABASE_URL } = require('../config');
 
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe('Cocktail API - Users', function () {
+describe('Hablamos API - Users', function () {
     const username = 'exampleUser';
     const password = 'examplePass';
     const firstName = 'Example';
@@ -222,7 +222,10 @@ describe('Cocktail API - Users', function () {
                         expect(res.body).to.have.keys(
                             'username',
                             'firstName',
-                            'lastName'
+                            'lastName',
+                            '_id',
+                            'questionsAnswered',
+                            'questionsCorrect'
                         );
                         expect(res.body.username).to.equal(username);
                         expect(res.body.firstName).to.equal(firstName);
@@ -248,7 +251,7 @@ describe('Cocktail API - Users', function () {
                         username,
                         password,
                         firstName: ` ${firstName} `,
-                        lastName
+                        lastName,
                     })
                     .then(res => {
                         expect(res).to.have.status(201);
@@ -257,6 +260,9 @@ describe('Cocktail API - Users', function () {
                             'username',
                             'firstName',
                             'lastName',
+                            '_id',
+                            'questionsAnswered',
+                            'questionsCorrect'
                         );
                         expect(res.body.username).to.equal(username);
                         expect(res.body.firstName).to.equal(firstName);
@@ -285,7 +291,10 @@ describe('Cocktail API - Users', function () {
                         expect(res.body).to.have.keys(
                             'username',
                             'lastName',
-                            'firstName'
+                            'firstName',
+                            '_id',
+                            'questionsAnswered',
+                            'questionsCorrect'
                         );
                         expect(res.body.username).to.equal(username);
                         expect(res.body.lastName).to.equal(lastName);
