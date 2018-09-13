@@ -6,7 +6,6 @@ const Question = require('../questions/models');
 const router = express.Router();
 const passport = require('passport');
 const jsonParser = bodyParser.json();
-
 const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });
 
 // ----------------Post to register a new user--------------------------
