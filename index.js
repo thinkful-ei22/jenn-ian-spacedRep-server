@@ -11,7 +11,6 @@ const { router: questionsRouter } = require('./questions/router');
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
-
 //create express app
 const app = express();
 
