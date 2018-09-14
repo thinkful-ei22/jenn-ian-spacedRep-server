@@ -10,12 +10,13 @@ After creating an account, a user can login, and start learning Spanish.  The us
 
 ## Screenshots
 ### Main Page
-
+![hablamos](https://user-images.githubusercontent.com/38081935/45572885-846c7f00-b81f-11e8-9ff9-23975703a0ab.png)
 
 ### Login
-
+![screen shot 2018-09-14 at 1 09 26 pm](https://user-images.githubusercontent.com/38081935/45572901-9817e580-b81f-11e8-940d-b6ea36ba6d43.png)
 
 ### Registration
+![screen shot 2018-09-14 at 1 09 42 pm](https://user-images.githubusercontent.com/38081935/45572919-a6fe9800-b81f-11e8-97db-99576af9f585.png)
 
 
 ## Target Audience
